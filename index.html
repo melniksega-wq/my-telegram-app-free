@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LUMO FREE</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        #close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="close-btn" onclick="closeApp()">✕</button>
+    
+    <div class="container">
+        <div class="loader"></div>
+        <h2>LUMO FREE</h2>
+        <p>Загрузка...</p>
+    </div>
+
+    <script>
+        let tg = Telegram.WebApp;
+        
+        function initTelegramApp() {
+            // Настраиваем Telegram WebApp
+            tg.expand();
+            
+            // ОТКЛЮЧАЕМ СВАЙП ВНИЗ
+            if (typeof tg.disableVerticalSwipes === 'function') {
+                tg.disableVerticalSwipes();
+            }
+            
+            // Включаем подтверждение закрытия
+            if (typeof tg.enableClosingConfirmation === 'function') {
+                tg.enableClosingConfirmation();
+            }
+            
+            // Перенаправляем на основной сайт
+            setTimeout(() => {
+                window.location.href = "https://terapia-bez-terapii.ru/lumo-free";
+            }, 1500);
+        }
+        
+        function closeApp() {
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                Telegram.WebApp.close();
+            }
+        }
+        
+        // Проверяем, что мы в Telegram
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            tg.ready();
+            initTelegramApp();
+        } else {
+            // Если открыто не в Telegram, сразу перенаправляем
+            window.location.href = "https://terapia-bez-terapii.ru/lumo-free";
+        }
+    </script>
+</body>
+</html>
